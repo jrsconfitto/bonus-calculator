@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Tangle document</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">   
 
     <!-- Tangle -->
     <script type="text/javascript" src="Tangle.js"></script>
 
     <!-- TangleKit (optional) -->
+    <link rel="stylesheet" href="gridism.css" type="text/css">
     <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
     <script type="text/javascript" src="TangleKit/mootools.js"></script>
     <script type="text/javascript" src="TangleKit/sprintf.js"></script>
@@ -54,20 +56,49 @@
 </head>
 
 <body onload="setUpTangle();">
-    <div id="example">
-        <p>This is my bonus calculator.</p>
+    <section id="example">
+        <div class="grid wrap">
+            <div class="">
+                <h1>James's bonus calculator</h1>
+            </div>
+        </div>
 
-        <p>
-            Let's say your bonus is <span data-var="bonus" class="TKNumberField"> dollars</span>.
-        </p>
+        <div class="grid wrap">
+            <div class="unit golden-large">
+                Given a bonus of $<span data-var="bonus" class="TKNumberField"></span>:
+            </div>
+            <div class="unit golden-small">
+                Your entire bonus is taxed at a rate of <span data-var="ssmTaxPercentage" data-format="%.2f"> %</span> for Social Security and Medicare   
+            </div>
+        </div>
 
-        <p>
-            You entire bonus is taxed at a rate of <span data-var="ssmTaxPercentage" data-format="%.2f"> %</span> for Social Security and Medicare, and you will be left with <span data-var="postSSMTaxDisplay" /> to allocate to investments and your pocket.
-        </p>
+        <div class="grid wrap">
+            <div class="unit golden-large">
+                You will be left with <span data-var="postSSMTaxDisplay" /> to allocate to investments and your pocket.
+            </div>
+        </div>
 
-        <p>
-            If you allocate <span class="TKAdjustableNumber" data-var="investments" data-step="25" data-format="%.2f"> to investments</span>, you'll have $<span data-var="preInvestmentsTaxed" data-format="%.2f"> left</span>, and after taxing that amount at a rate of <span data-var="incomeTaxPercentage" data-format="%.0f" class="TKAdjustableNumber">%</span> for federal and state income taxes (which works out to $<span data-var="postInvestmentsTaxed" data-format="%.2f"></span>), you will have <span data-var="inPocketDisplay"> dollars</span> left in your pocket.
-        </p>
+        <div class="grid wrap">
+            <div class="unit golden-large">
+                If you allocate <span class="TKAdjustableNumber" data-var="investments" data-step="25" data-format="%.2f"> to investments</span>:
+            </div>
+            <div class="unit golden-small">
+                $<span data-var="preInvestmentsTaxed" data-format="%.2f"> will be left</span>.
+            </div>
+        </div>
+        <div class="grid wrap">
+            <div class="unit golden-large">
+                After taxing that amount at a rate of <span data-var="incomeTaxPercentage" data-format="%.0f" class="TKAdjustableNumber">%</span> for federal and state income taxes 
+            </div>
+            <div class="unit golden-small">
+                (which works out to $<span data-var="postInvestmentsTaxed" data-format="%.2f"></span>)
+            </div>
+        </div>
+        <div class="grid wrap">
+            <div class="unit golden-large">
+                 You will have <span data-var="inPocketDisplay"> dollars</span> left in your pocket.
+            </div>
+        </div>
     </div>
 
 </body>
