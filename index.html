@@ -22,23 +22,43 @@
 
             var element = document.getElementById("example");
 
+            var taxed = function (subTotal, taxPercentage) {
+                return subTotal * taxPercentage / 100
+            }
+
+            var afterTax = function(subTotal, taxPercentage) {
+                return subTotal - taxed(subTotal, taxPercentage)
+            }
+
             var tangle = new Tangle(element, {
                 initialize: function () {
-                    this.bonus = 50;
-                    this.takeOut = 25;
-                    this.taxRate = 35;
+                    this.ssmTaxPercentage = 0.0765 * 100
+                    this.incomeTaxPercentage = (0.28 + 0.07) * 100
+                    this.bonus = 50
+                    this.investments = afterTax(this.bonus, this.ssmTaxPercentage)
                 },
                 update: function () {
-                    this.taxes = this.takeOut * (this.taxRate / 100)
-                    this.taxed = accounting.formatMoney(this.taxes)
-                    this.inPocket = this.takeOut - this.taxes
+                    this.ssmTaxed = taxed(this.bonus, this.ssmTaxPercentage)
+                    this.postSSMTax = afterTax(this.bonus, this.ssmTaxPercentage)
+                    this.postSSMTaxDisplay = accounting.formatMoney(this.postSSMTax)
+
+                    this.preInvestmentsTaxed = this.postSSMTax - this.investments
+                    this.postInvestmentsTaxed = taxed(this.postSSMTax - this.investments, this.incomeTaxPercentage)
+                    this.inPocket = afterTax(this.postSSMTax - this.investments, this.incomeTaxPercentage)
                     this.inPocketDisplay = accounting.formatMoney(this.inPocket)
-                    this.investments = accounting.formatMoney(this.bonus - this.taxes - this.inPocket)
                 }
             });
         }
 
     </script>
+    <style>
+        .left {
+            float: left;
+        }
+        .right {
+            float: right;
+        }
+    </style>
 </head>
 
 <body onload="setUpTangle();">
@@ -46,14 +66,15 @@
         <p>This is my bonus calculator.</p>
 
         <p>
-            Let's say your bonus is <span data-var="bonus" class="TKNumberField"> dollars</span>
+            Let's say your bonus is <span data-var="bonus" class="TKNumberField"> dollars</span>.
         </p>
 
         <p>
-            Assuming a tax rate of <span data-var="taxRate" data-format="%.0f" class="TKAdjustableNumber">%</span>, when you try to take <span data-var="takeOut" class="TKAdjustableNumber" data-min="0" data-step="25"> dollars out of pocket</span>...
+            You entire bonus is taxed at a rate of <span data-var="ssmTaxPercentage" data-format="%.2f"> %</span> for Social Security and Medicare, and you will be left with <span data-var="postSSMTaxDisplay" /> to allocate to investments and your pocket.
         </p>
+
         <p>
-             You will pay <span data-var="taxed"> in taxes</span>, have <span data-var="inPocketDisplay"> dollars</span> in your pocket and you will have <span data-var="investments"> left</span> for your investments.
+            If you allocate <span class="TKAdjustableNumber" data-var="investments" data-step="25" data-format="%.2f"> to investments</span>, you'll have $<span data-var="preInvestmentsTaxed" data-format="%.2f"> left</span>, and after taxing that amount at a rate of <span data-var="incomeTaxPercentage" data-format="%.0f" class="TKAdjustableNumber">%</span> for federal and state income taxes (which works out to $<span data-var="postInvestmentsTaxed" data-format="%.2f"></span>), you will have <span data-var="inPocketDisplay"> dollars</span> left in your pocket.
         </p>
     </div>
 
