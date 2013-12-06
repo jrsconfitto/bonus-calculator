@@ -42,11 +42,20 @@
                 update: function () {
                     this.ssmTaxed = taxed(this.bonus, this.ssmTaxPercentage)
                     this.postSSMTax = afterTax(this.bonus, this.ssmTaxPercentage)
-                    this.postSSMTaxDisplay = accounting.formatMoney(this.postSSMTax)
 
                     this.preInvestmentsTaxed = this.postSSMTax - this.investments
                     this.postInvestmentsTaxed = taxed(this.postSSMTax - this.investments, this.incomeTaxPercentage)
+
+                    // Calculate what you'll actually take home. It can't be less than 0
                     this.inPocket = afterTax(this.postSSMTax - this.investments, this.incomeTaxPercentage)
+
+                    // Take care of values that can't be less than 0
+                    if (this.inPocket < 0) {
+                        this.inPocket = 0;
+                    }
+
+                    // Format results for money
+                    this.postSSMTaxDisplay = accounting.formatMoney(this.postSSMTax)
                     this.inPocketDisplay = accounting.formatMoney(this.inPocket)
                 }
             });
