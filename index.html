@@ -55,6 +55,7 @@
                     }
 
                     // Format results for money
+                    this.SSMTaxDisplay = accounting.formatMoney(this.ssmTaxed)
                     this.postSSMTaxDisplay = accounting.formatMoney(this.postSSMTax)
                     this.inPocketDisplay = accounting.formatMoney(this.inPocket)
                 }
@@ -77,7 +78,7 @@
                 Given a bonus of $<span data-var="bonus" class="TKNumberField"></span>:
             </div>
             <div class="unit golden-small">
-                Your entire bonus is taxed at a rate of <span data-var="ssmTaxPercentage" data-format="%.2f"> %</span> for Social Security and Medicare   
+                Your entire bonus is taxed at a rate of <span data-var="ssmTaxPercentage" data-format="%.2f"> %</span> for Social Security and Medicare which means <span data-var="SSMTaxDisplay" /> will be taken out.
             </div>
         </div>
 
